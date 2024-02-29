@@ -1,0 +1,6 @@
+$schema: "1.0"
+name: install-visio
+command: './main.ps1'
+author: David Watson
+documentation:
+  notes: This task is used to download and install the Microsoft Visio

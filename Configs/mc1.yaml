@@ -1,0 +1,38 @@
+# From https://github.com/microsoft/devcenter-examples
+$schema: 1.0
+tasks:
+  - name: winget
+    parameters:
+      package: Microsoft.VisualStudioCode
+      runAsUser: true
+  - name: winget
+    parameters:
+      package: Microsoft.SQLServerManagementStudio
+      runAsUser: true
+  - name: winget
+    parameters:
+      package: Microsoft.Azure.StorageExplorer
+      runAsUser: true
+  - name: winget 
+    parameters:
+      package: GitExtensionsTeam.GitExtensions
+      runAsUser: true
+  - name: winget
+    parameters:
+      package: JGraph.Draw
+      runAsUser: true
+  - name: choco
+    parameters:
+      package: xrmtoolbox
+  - name: install-powerplatformcli
+  - name: install-visio
+  - name: install-vscode-extensions
+    paramaters:
+      extensions: github.copilot,github.copilot-chat
+  - name: git-clone
+    description: Clone this repository into C:\wip
+    parameters:
+      repositoryUrl: https://github.com/OrchardCMS/OrchardCore.git
+      directory: C:\wip
+
+
