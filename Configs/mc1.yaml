@@ -32,7 +32,7 @@ tasks:
   - name: git-clone
     description: Clone this repository into C:\wip
     parameters:
-      repositoryUrl: https://github.com/OrchardCMS/OrchardCore.git
+      repositoryUrl: https://github.com/davidxw/devcenter-catalog
       directory: C:\wip
 
 
