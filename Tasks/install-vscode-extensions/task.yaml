@@ -2,11 +2,10 @@ $schema: "1.0"
 name: install-vscode-extensions
 description: Installs VS Code extensions
 author: David Watson
-command: ./main.ps1 -extensions {{extensions}}
+command: ./main.ps1 -extensions {{ extensions }}
 parameters:
   extensions:
     type: string
-    default: ""
     required: true
     description: |
       A list of Visual Studio Code extensions to install, using identifiers. e.g. "github.copilot,github.copilot-chat". Use "code --list-extensions" to get a list of currently installed extensions.
