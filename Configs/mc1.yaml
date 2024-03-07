@@ -1,5 +1,5 @@
 # From https://github.com/microsoft/devcenter-examples
-$schema: 1.0
+$schema: "1.0"
 tasks:
   - name: winget
     parameters:
@@ -27,8 +27,8 @@ tasks:
   - name: install-powerplatformcli
   # - name: install-visio
   - name: install-vscode-extensions
-    paramaters:
-      extensions: github.copilot,github.copilot-chat
+    parameters:
+      extensions: 'github.copilot,github.copilot-chat'
   - name: git-clone
     parameters:
       repositoryUrl: https://github.com/davidxw/devcenter-catalog

@@ -1,0 +1,6 @@
+$schema: "1.0"
+tasks:
+  - name: install-vscode-extensions
+    paramaters:
+      extensions: 'github.copilot,github.copilot-chat'
+

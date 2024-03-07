@@ -8,11 +8,11 @@ parameters:
     type: string
     required: true
     description: |
-      A list of Visual Studio Code extensions to install, using identifiers. e.g. "github.copilot,github.copilot-chat". Use "code --list-extensions" to get a list of currently installed extensions.
+      A list of Visual Studio Code extensions to install, using identifiers. e.g. 'github.copilot,github.copilot-chat'. Use "code --list-extensions" to get a list of currently installed extensions.
 documentation:
   notes: This task is used to install VS Code extensions.
   examples:
     - name: install-vscode-extensions
       description: Install the GitHub Copilot VS Code extensions
       parameters:
-        extensions: "github.copilot,github.copilot-chat"
+        extensions: github.copilot,github.copilot-chat"

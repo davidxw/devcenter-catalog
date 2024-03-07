@@ -68,6 +68,7 @@ az role assignment create --role "DevCenter Dev Box User" --scope "/subscription
 $KeyVaultName="McKeyVault2"
 $SecretName="McGitHubPAT"
 $Repo="https://github.com/davidxw/devcenter-catalog.git"
+# create a PAT (https://learn.microsoft.com/en-us/azure/deployment-environments/how-to-configure-catalog?tabs=GitHubRepoPAT#add-a-catalog)
 # set in command line - $env:PAT='your-pat'
 $PAT=$env:PAT
 
@@ -85,7 +86,6 @@ $dc = az devcenter admin devcenter show --name $DevCenterName --resource-group $
 az role assignment create --role "Key Vault Secrets User" --scope "/subscriptions/$SubscriptionId/resourcegroups/$ResourceGroupName/providers/Microsoft.KeyVault/vaults/$KeyVaultName/secrets/$SecretName" --assignee $dc.identity.principalId
 
 # Create a catalog of config tasks
-az devcenter admin catalog create --git-hub path="/Tasks" branch="main" uri=$Repo secret-identifier="$secret.id" --name "TaskCatalog" --dev-center-name $DevCenterName --resource-group $ResourceGroupName
 az devcenter admin catalog create --git-hub path="/Tasks" branch="main" uri=$Repo secret-identifier="https://$KeyVaultName.vault.azure.net/secrets/$SecretName" --name "TaskCatalog" --dev-center-name $DevCenterName --resource-group $ResourceGroupName
 
 # az devcenter admin catalog get-sync-error-detail --name "TaskCatalog" --dev-center-name $DevCenterName --resource-group $ResourceGroupName
