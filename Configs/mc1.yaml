@@ -13,6 +13,10 @@ tasks:
     parameters:
       package: Microsoft.Azure.StorageExplorer
       runAsUser: true
+  - name: winget
+    parameters:
+      package: Postman.Postman
+      runAsUser: true
   - name: winget 
     parameters:
       package: GitExtensionsTeam.GitExtensions

@@ -2,14 +2,15 @@
 az extension add --upgrade -n devcenter
 
 # Set Variables
+$SubscriptionId="b096bf45-e5d7-4d85-9dfc-3e7b04218307"
 $ResourceGroupName="mc-devbox-poc-1"
 $ResourceLocation="australiaeast"
+
 $DevCenterName="McDevCenter1"
 $ProjectName="McDev1Project1"
 $ProjectDescription='Project 1'
 $DevBoxDefinitionName="McWin11-16"
 $DevPool="DevPool1"
-$SubscriptionId="b096bf45-e5d7-4d85-9dfc-3e7b04218307"
 
 $NetworkRGName="mc-devbox-poc-core"
 $NetworkVnetName="mc-vnet"
