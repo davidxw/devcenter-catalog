@@ -9,5 +9,8 @@ param isolatedVvNetRgName = ''
 
 // dev center names
 param devCenterName = ''
-param projectName = ''
-param projectDescription = ''
+param projectName = 'POC Project'
+param projectDescription = 'Project to test the provisioning of Dev Boxes in the Metcash environment.'
+
+// Principal Id of user or group to add to the DevCenter Dev Box User role for the project. Remove to create manually.
+param devboxProjectUser = ''

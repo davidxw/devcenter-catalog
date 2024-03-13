@@ -21,6 +21,9 @@ param projectDescription string = 'Project 2'
 // this template creates a single dev pool using the above definition and connected to the isolated network
 param devPoolName string = 'VS2022_vm8_32_256-isolated'
 
+// Principal Id of user or group to add to the DevCenter Dev Box User role for the project
+param devboxProjectUser string = ''
+
 var devBoxDefinitionName = 'Win11_VS2022_vm8_32_256'
 
 var isolatedNetworkConnectionName = 'con-isolated-${isolatedVNetName}'
@@ -88,7 +91,19 @@ resource devPool 'Microsoft.DevCenter/projects/pools@2023-04-01' = {
   properties: {
     devBoxDefinitionName: vs2022.outputs.devBoxDefinitionName
     licenseType: 'Windows_Client'
-    localAdministrator: 'Enabled'
+    localAdministrator: 'Disabled'
     networkConnectionName: isolatedConnectedNetworkName
+  }
+}
+
+// add DevCenter Dev Box User role to provided principal - gives permission to create dev boxes in the project
+var devCenterDevBoxUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '45d50f46-0b78-4001-a660-4198cbe8cd05')
+resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(devboxProjectUser)){
+  scope: project
+  name: guid(project.id, devboxProjectUser, devCenterDevBoxUserRoleId)
+  properties: {
+    roleDefinitionId: devCenterDevBoxUserRoleId
+    principalType: 'User'
+    principalId: devboxProjectUser
   }
 }
