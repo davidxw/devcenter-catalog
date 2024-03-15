@@ -11,7 +11,7 @@ param location string = resourceGroup().location
 // THE TEMPLATE DOES NOT CREATE THIS VNET OR SUBNET
 param isolatedVNetName string = 'mc-vnet'
 param isolatedSubnetName string = 'devbox'
-param isolatedVvNetRgName string = 'mc-devbox-poc-core'
+param isolatedVNetRgName string = 'mc-devbox-poc-core'
 
 // dev center names
 param devCenterName string = 'McDevCenter2'
@@ -23,6 +23,16 @@ param devPoolName string = 'VS2022_vm8_32_256-isolated'
 
 // Principal Id of user or group to add to the DevCenter Dev Box User role for the project
 param devboxProjectUser string = ''
+
+// only required if you are craeting a Tasks Catalog - leave 'catalogName' empty if you are not creating a catalog
+// To create the required PAT tokens see here: // https://learn.microsoft.com/en-us/azure/deployment-environments/how-to-configure-catalog?tabs=GitHubRepoPAT#create-a-personal-access-token-in-github
+param catalogName string = ''
+param catalogRepoBranch string = ''
+param catalogRepoPath string = ''
+param catalogRepoUri string = ''
+
+param keyVaultName string = ''
+param catalogRepoPAT string = ''
 
 var devBoxDefinitionName = 'Win11_VS2022_vm8_32_256'
 
@@ -51,9 +61,8 @@ module vs2022 'devbox_defn.bicep' = {
 
 resource vnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {
   name: isolatedVNetName
-  scope: resourceGroup(isolatedVvNetRgName)
+  scope: resourceGroup(isolatedVNetRgName)
 }
-
 
 resource networkconnection 'Microsoft.DevCenter/networkConnections@2023-04-01' = {
   name: isolatedNetworkConnectionName
@@ -72,7 +81,6 @@ resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2023-0
     networkConnectionId: networkconnection.id
   }
 }
-
 
 resource project 'Microsoft.DevCenter/projects@2023-04-01' = {
   name: projectName
@@ -98,12 +106,26 @@ resource devPool 'Microsoft.DevCenter/projects/pools@2023-04-01' = {
 
 // add DevCenter Dev Box User role to provided principal - gives permission to create dev boxes in the project
 var devCenterDevBoxUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '45d50f46-0b78-4001-a660-4198cbe8cd05')
-resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(devboxProjectUser)){
+resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(devboxProjectUser)) {
   scope: project
   name: guid(project.id, devboxProjectUser, devCenterDevBoxUserRoleId)
   properties: {
     roleDefinitionId: devCenterDevBoxUserRoleId
     principalType: 'User'
     principalId: devboxProjectUser
+  }
+}
+
+// create catalog
+module catalog 'devbox_catalog.bicep' =  if (!empty(catalogName)) {
+  name: '${deployment().name}_catalog'
+  params: {
+    devCenterName: devCenterName
+    keyVaultName: keyVaultName
+    catalogRepoBranch: catalogRepoBranch
+    catalogRepoPath: catalogRepoPath
+    catalogName: catalogName
+    catalogRepoPAT: catalogRepoPAT
+    catalogRepoUri: catalogRepoUri
   }
 }
