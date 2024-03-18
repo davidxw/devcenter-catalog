@@ -7,18 +7,12 @@ param(
 )
 
 $profilePath = [System.Environment]::GetFolderPath("UserProfile")
-$vsCodeCliPath = "$profilePath\AppData\Local\Programs\Microsoft VS Code\bin"
 
-$Env:Path += [IO.Path]::PathSeparator + $vsCodeCliPath
-
-#$vsCodeCli = "$profilePath\AppData\Local\Programs\'Microsoft VS Code'\bin\code"
-$vsCodeCli = "code"
+$vsCodeCli = "$profilePath\AppData\Local\Programs\'Microsoft VS Code'\bin\code.cmd"
 
 Invoke-Expression "$vsCodeCli --list-extensions" -OutVariable output | Out-Null
 $installed = $output -split "\s"
 $requiredExtensions = $extensions -split ","
-
-
 
 foreach ($ext in $requiredExtensions) {
     if ($installed.Contains($ext)) {
