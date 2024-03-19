@@ -29,7 +29,6 @@ tasks:
     parameters:
       package: xrmtoolbox
   - name: install-powerplatformcli
-  # - name: install-visio
   - name: install-vscode-extensions
     parameters:
       extensions: 'github.copilot,github.copilot-chat'
