@@ -41,7 +41,7 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' existing = {
 var keyVaultSecretReaderRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
 resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: secret
-  name: guid(devCenter.id, devCenter.name, keyVaultSecretReaderRoleId)
+  name: guid(devCenter.id, devCenter.name, keyVaultSecretReaderRoleId, secretName)
   properties: {
     roleDefinitionId: keyVaultSecretReaderRoleId
     principalType: 'ServicePrincipal'
